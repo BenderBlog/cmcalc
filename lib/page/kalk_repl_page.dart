@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../model/repl_message.dart';
 
 class KalkReplPage extends StatefulWidget {
+  static const page = "kalk_repl_page";
+
   const KalkReplPage({super.key});
 
   @override
@@ -138,12 +140,24 @@ class _KalkReplState extends State<KalkReplPage> {
       appBar: AppBar(
         title: const Text('Patchouli REPL'),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.help),
+          )
+        ],
       ),
       body: Column(
         children: [
           Flexible(
-            child: Ink(
-              color: Theme.of(context).scaffoldBackgroundColor,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: Image.asset("assets/patchouli_background.jpg").image,
+                  fit: BoxFit.cover,
+                  opacity: 0.4,
+                ),
+              ),
               child: SafeArea(
                 bottom: false,
                 child: ListView.builder(
