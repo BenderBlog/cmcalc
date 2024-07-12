@@ -6,12 +6,12 @@ It is touhou themed which knows the meaning of 9.
 
 ## Function
 
- [] Cirno's Normal Calculator. (kalk backend)
- [] Marisa's Scientific Calculator. (kalk backend)
- [] Reimu Currency Transformer. (May not appear in FOSS version)
- [] (Somebody's) Calendar and Time Transformer. (numbat backend)
- [] (Somebody's) Unit Transformer. (numbat backend)
- [] Patchouli REPL to use kalk directly.
+ - [] Cirno's Normal Calculator. (kalk backend)
+ - [] Marisa's Scientific Calculator. (kalk backend)
+ - [] Reimu Currency Transformer. (May not appear in FOSS version)
+ - [] (Somebody's) Calendar and Time Transformer. (numbat backend)
+ - [] (Somebody's) Unit Transformer. (numbat backend)
+ - [] Patchouli REPL to use kalk directly.
  - And others...
 
 ## Library
