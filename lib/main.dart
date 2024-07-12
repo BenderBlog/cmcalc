@@ -1,9 +1,10 @@
-import 'package:cmcalc/page/kalk_repl_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cmcalc/src/rust/frb_generated.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'page/router.dart';
 
 Future<void> main() async {
   /// Google font library setting.
@@ -22,9 +23,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'cmcalc',
-      home: KalkReplPage(),
     );
   }
 }

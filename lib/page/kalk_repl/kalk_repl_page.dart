@@ -1,9 +1,10 @@
 import 'package:cmcalc/src/rust/api/kalk_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../model/repl_message.dart';
+import '../../model/repl_message.dart';
 
 class KalkReplPage extends StatefulWidget {
   static const page = "kalk_repl_page";
@@ -85,7 +86,8 @@ class _KalkReplState extends State<KalkReplPage> {
   List<ReplMessage> messages = [
     ReplMessage.response(
       "Welcome to Kalk Read–eval–print loop terminal. "
-      "It is not completed, rewriting from kalker rust code.",
+      "It is not completed, rewriting from kalker rust code. "
+      "Press the help button to know more about Kalk.",
     ),
   ];
 
@@ -142,7 +144,7 @@ class _KalkReplState extends State<KalkReplPage> {
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => context.go('/help'),
             icon: const Icon(Icons.help),
           )
         ],
@@ -155,7 +157,7 @@ class _KalkReplState extends State<KalkReplPage> {
                 image: DecorationImage(
                   image: Image.asset("assets/patchouli_background.jpg").image,
                   fit: BoxFit.cover,
-                  opacity: 0.4,
+                  opacity: 0.3,
                 ),
               ),
               child: SafeArea(
