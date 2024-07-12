@@ -1,0 +1,14 @@
+[package]
+name = "rust_lib_cmcalc"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+flutter_rust_bridge = "=2.1.0"
+
+[dependencies.kalk]
+version = "3.2.0"
+default-features = false

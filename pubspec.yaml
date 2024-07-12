@@ -1,0 +1,34 @@
+name: cmcalc
+description: "cmclac, aka \"Cirno Math Classroom/Calculator\", is an advanced Flutter calculator."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  rust_lib_cmcalc:
+    path: rust_builder
+  flutter_rust_bridge: 2.1.0
+  freezed_annotation: ^2.4.3
+  google_fonts: ^6.2.1
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  integration_test:
+    sdk: flutter
+  build_runner: ^2.4.11
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
+  change_app_package_name: ^1.3.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/Fira_Code/
