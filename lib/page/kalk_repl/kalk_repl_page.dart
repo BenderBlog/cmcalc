@@ -1,6 +1,6 @@
 import 'package:cmcalc/src/rust/api/kalk_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +19,12 @@ class _KalkReplState extends State<KalkReplPage> {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
   var _isComposing = false;
+
+  @override
+  void initState() {
+    _controller.selection = const TextSelection.collapsed(offset: 0);
+    super.initState();
+  }
 
   final functionDict = {
     "ceil": "⌈⌉",
@@ -60,7 +66,8 @@ class _KalkReplState extends State<KalkReplPage> {
   };
 
   final buttonRowValues = [
-    ...List.generate(10, (index) => index.toString()),
+    ...List.generate(9, (index) => (index + 1).toString()),
+    '0',
     "+",
     "-",
     "×",
@@ -80,7 +87,7 @@ class _KalkReplState extends State<KalkReplPage> {
     "⌈",
     "∫",
     "x",
-    "DEL"
+    "⌫"
   ];
 
   List<ReplMessage> messages = [
@@ -129,6 +136,7 @@ class _KalkReplState extends State<KalkReplPage> {
     _controller.text = _controller.text.substring(0, position) +
         string +
         _controller.text.substring(position);
+
     _controller.selection = TextSelection.collapsed(offset: position + offset);
     setState(() {
       _isComposing = _controller.text.isNotEmpty;
@@ -212,6 +220,7 @@ class _KalkReplState extends State<KalkReplPage> {
             top: false,
             child: Container(
               decoration: BoxDecoration(color: Theme.of(context).cardColor),
+              constraints: const BoxConstraints(maxHeight: 120),
               child: _buildSymbolButtonGrid(),
             ),
           ),
@@ -222,64 +231,77 @@ class _KalkReplState extends State<KalkReplPage> {
 
   Widget _buildSymbolButtonGrid() => Container(
         margin: const EdgeInsets.all(4),
-        child: LayoutGrid(
-          rowSizes: List.generate(3, (index) => auto),
-          columnSizes: List.generate(10, (index) => auto),
-          gridFit: GridFit.expand,
-          children: List<Widget>.generate(
-            buttonRowValues.length,
-            (index) => ReplButton(
-              text: buttonRowValues[index],
-              onPressed: () {
-                switch (buttonRowValues[index]) {
-                  case "←":
-                    if (_controller.selection.base.offset >= 1) {
-                      _controller.selection = TextSelection.collapsed(
-                        offset: _controller.selection.base.offset - 1,
-                      );
-                    }
-                    break;
-                  case "→":
-                    if (index == 1 &&
-                        _controller.selection.base.offset !=
-                            _controller.text.length) {
-                      _controller.selection = TextSelection.collapsed(
-                        offset: _controller.selection.base.offset + 1,
-                      );
-                    }
-                    break;
-                  case 'DEL':
-                    int position = _controller.selection.base.offset;
-                    if (position == 0) break;
-                    _controller.text = _controller.text
-                        .replaceRange(position - 1, position, "");
-                    _controller.selection =
-                        TextSelection.collapsed(offset: position - 1);
-                    setState(() {
-                      _isComposing = _controller.text.isNotEmpty;
-                    });
-                    break;
-                  case '√':
-                  case '∑':
-                  case '∫':
-                    _addChar("${buttonRowValues[index]}()", offset: 2);
-                    break;
-                  case '(':
-                    _addChar("()");
-                    break;
-                  case '⌈':
-                    _addChar("⌈⌉");
-                    break;
-                  case '⌊':
-                    _addChar("⌊⌋");
-                    break;
-                  default:
-                    _addChar(buttonRowValues[index]);
-                    break;
+        child: GridButton(
+          onPressed: (value) {
+            switch (value) {
+              case "←":
+                if (_controller.selection.base.offset >= 1) {
+                  _controller.selection = TextSelection.collapsed(
+                    offset: _controller.selection.base.offset - 1,
+                  );
                 }
-              },
-            ).withGridPlacement(),
-          ),
+                break;
+              case "→":
+                if (_controller.selection.base.offset !=
+                    _controller.text.length) {
+                  _controller.selection = TextSelection.collapsed(
+                    offset: _controller.selection.base.offset + 1,
+                  );
+                }
+                break;
+              case '⌫':
+                int position = _controller.selection.base.offset;
+                if (position == 0) break;
+                _controller.text =
+                    _controller.text.replaceRange(position - 1, position, "");
+                _controller.selection =
+                    TextSelection.collapsed(offset: position - 1);
+                setState(() {
+                  _isComposing = _controller.text.isNotEmpty;
+                });
+                break;
+              case '√':
+              case '∑':
+              case '∫':
+                _addChar("$value()", offset: 2);
+                break;
+              case '(':
+                _addChar("()");
+                break;
+              case '⌈':
+                _addChar("⌈⌉");
+                break;
+              case '⌊':
+                _addChar("⌊⌋");
+                break;
+              default:
+                _addChar(value);
+                break;
+            }
+          },
+          items: [
+            List.generate(
+              10,
+              (index) => GridButtonItem(
+                title: buttonRowValues[index],
+                value: buttonRowValues[index],
+              ),
+            ),
+            List.generate(
+              10,
+              (index) => GridButtonItem(
+                title: buttonRowValues[index + 10],
+                value: buttonRowValues[index + 10],
+              ),
+            ),
+            List.generate(
+              10,
+              (index) => GridButtonItem(
+                title: buttonRowValues[index + 20],
+                value: buttonRowValues[index + 20],
+              ),
+            ),
+          ],
         ),
       );
 
