@@ -215,7 +215,6 @@ class _KalkReplState extends State<KalkReplPage> {
             decoration: BoxDecoration(color: Theme.of(context).cardColor),
             child: _buildTextComposer(),
           ),
-          const Divider(height: 1.0),
           SafeArea(
             top: false,
             child: Container(
@@ -229,117 +228,114 @@ class _KalkReplState extends State<KalkReplPage> {
     );
   }
 
-  Widget _buildSymbolButtonGrid() => Container(
-        margin: const EdgeInsets.all(4),
-        child: GridButton(
-          onPressed: (value) {
-            switch (value) {
-              case "←":
-                if (_controller.selection.base.offset >= 1) {
-                  _controller.selection = TextSelection.collapsed(
-                    offset: _controller.selection.base.offset - 1,
-                  );
-                }
-                break;
-              case "→":
-                if (_controller.selection.base.offset !=
-                    _controller.text.length) {
-                  _controller.selection = TextSelection.collapsed(
-                    offset: _controller.selection.base.offset + 1,
-                  );
-                }
-                break;
-              case '⌫':
-                int position = _controller.selection.base.offset;
-                if (position == 0) break;
-                _controller.text =
-                    _controller.text.replaceRange(position - 1, position, "");
-                _controller.selection =
-                    TextSelection.collapsed(offset: position - 1);
-                setState(() {
-                  _isComposing = _controller.text.isNotEmpty;
-                });
-                break;
-              case '√':
-              case '∑':
-              case '∫':
-                _addChar("$value()", offset: 2);
-                break;
-              case '(':
-                _addChar("()");
-                break;
-              case '⌈':
-                _addChar("⌈⌉");
-                break;
-              case '⌊':
-                _addChar("⌊⌋");
-                break;
-              default:
-                _addChar(value);
-                break;
-            }
-          },
-          items: [
-            List.generate(
-              10,
-              (index) => GridButtonItem(
-                title: buttonRowValues[index],
-                value: buttonRowValues[index],
-              ),
+  Widget _buildSymbolButtonGrid() => GridButton(
+        onPressed: (value) {
+          switch (value) {
+            case "←":
+              if (_controller.selection.base.offset >= 1) {
+                _controller.selection = TextSelection.collapsed(
+                  offset: _controller.selection.base.offset - 1,
+                );
+              }
+              break;
+            case "→":
+              if (_controller.selection.base.offset !=
+                  _controller.text.length) {
+                _controller.selection = TextSelection.collapsed(
+                  offset: _controller.selection.base.offset + 1,
+                );
+              }
+              break;
+            case '⌫':
+              int position = _controller.selection.base.offset;
+              if (position == 0) break;
+              _controller.text =
+                  _controller.text.replaceRange(position - 1, position, "");
+              _controller.selection =
+                  TextSelection.collapsed(offset: position - 1);
+              setState(() {
+                _isComposing = _controller.text.isNotEmpty;
+              });
+              break;
+            case '√':
+            case '∑':
+            case '∫':
+              _addChar("$value()", offset: 2);
+              break;
+            case '(':
+              _addChar("()");
+              break;
+            case '⌈':
+              _addChar("⌈⌉");
+              break;
+            case '⌊':
+              _addChar("⌊⌋");
+              break;
+            default:
+              _addChar(value);
+              break;
+          }
+        },
+        items: [
+          List.generate(
+            10,
+            (index) => GridButtonItem(
+              title: buttonRowValues[index],
+              value: buttonRowValues[index],
             ),
-            List.generate(
-              10,
-              (index) => GridButtonItem(
-                title: buttonRowValues[index + 10],
-                value: buttonRowValues[index + 10],
-              ),
+          ),
+          List.generate(
+            10,
+            (index) => GridButtonItem(
+              title: buttonRowValues[index + 10],
+              value: buttonRowValues[index + 10],
             ),
-            List.generate(
-              10,
-              (index) => GridButtonItem(
-                title: buttonRowValues[index + 20],
-                value: buttonRowValues[index + 20],
-              ),
+          ),
+          List.generate(
+            10,
+            (index) => GridButtonItem(
+              title: buttonRowValues[index + 20],
+              value: buttonRowValues[index + 20],
             ),
-          ],
-        ),
+          ),
+        ],
       );
 
   Widget _buildTextComposer() => IconTheme(
         data: IconThemeData(
           color: Theme.of(context).colorScheme.secondary,
         ),
-        child: Container(
-            margin: const EdgeInsets.all(4),
-            child: Row(
-              children: [
-                const SizedBox(width: 4),
-                Flexible(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                    ),
-                    onChanged: (text) {
-                      setState(() {
-                        _isComposing = text.isNotEmpty;
-                      });
-                    },
-                    onSubmitted: _isComposing ? _handleSubmitted : null,
-                    focusNode: _focusNode,
-                  ),
+        child: Row(
+          children: [
+            const SizedBox(width: 4),
+            Text(">>"),
+            const SizedBox(width: 4),
+            Flexible(
+              child: TextField(
+                controller: _controller,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: _isComposing
-                        ? () => _handleSubmitted(_controller.text)
-                        : null,
-                  ),
-                ),
-              ],
-            )),
+                onChanged: (text) {
+                  setState(() {
+                    _isComposing = text.isNotEmpty;
+                  });
+                },
+                onSubmitted: _isComposing ? _handleSubmitted : null,
+                focusNode: _focusNode,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: _isComposing
+                    ? () => _handleSubmitted(_controller.text)
+                    : null,
+              ),
+            ),
+          ],
+        ),
       );
 }
 

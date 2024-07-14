@@ -9,8 +9,8 @@ pub struct KalkResult {
 #[flutter_rust_bridge::frb(sync)]
 pub fn calc_str(input: String) -> KalkResult {
     let mut parser_context = parser::Context::new();
-    let format = ScientificNotationFormat::Engineering;
-    match parser::eval(&mut parser_context, input.as_str()) {
+    let format = ScientificNotationFormat::Normal;
+    match parser::eval(&mut parser_context, input.as_str(), (2048 as isize) as u32) {
         Ok(Some(result)) => KalkResult {
             is_error: false,
             content: result.to_string_pretty_format(format),
@@ -25,11 +25,6 @@ pub fn calc_str(input: String) -> KalkResult {
         },
     }
 }
-
-// Synchronous mode for simplicity of the demo
-//pub fn greet(name: String) -> String {
-//    format!("Hello, {name}!")
-//}
 
 #[flutter_rust_bridge::frb(init)]
 pub fn init_app() {
