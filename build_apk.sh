@@ -16,7 +16,7 @@ for i in "${!platform[@]}"; do
     export CC="$NDK_TOOLCHAIN/bin/${platform[$i]}21-clang"
     export AS=$CC
     export CXX="$NDK_TOOLCHAIN/bin/a${platform[$i]}-clang++"
-    export CXXCPP="$NDK_TOOLCHAIN/bin/clang++"
+    export CXXCPP="$NDK_TOOLCHAIN/bin/clang -E"
     flutter build apk --split-per-abi --target-platform=$i
 done
 

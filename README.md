@@ -16,8 +16,16 @@ It is touhou themed which knows the meaning of 9.
 
 ## Library
 
-1. [kalk by PaddiM8](https://github.com/PaddiM8/kalker), compiled without rug, only support [f64](https://doc.rust-lang.org/std/primitive.f64.html). Should be enough.
+1. [kalk by PaddiM8](https://github.com/PaddiM8/kalker).
 2. [flutter_rust_bridge by fzyzcjy](https://pub.dev/packages/flutter_rust_bridge).
+
+## Packaging
+
+Most of the problem is related to gmp-mpfr-sys, a dependence of kalker.
+
+MacOS and Linux should not enconter much trouble.
+
+For Android, packagers should use `./build_apk` to compile the Android version, with `NDK_TOOLCHAIN` env as the folder of the NDK LLVM toolchains. eg. `/Users/superbart/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64`.
 
 ## Background
 
