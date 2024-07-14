@@ -1,6 +1,8 @@
 # cmcalc
 
-cmclac, aka "Cirno Math Classroom/Calculator", is an advanced Flutter calculator. 
+cmclac, aka "Cirno Math Classroom/Calculator", is an advanced Flutter calculator. Using kalk as backend.
+
+Maybe use numbat as backend for unit calculation...
 
 It is touhou themed which knows the meaning of 9.
 
@@ -11,7 +13,8 @@ It is touhou themed which knows the meaning of 9.
  - [ ] Reimu Currency Transformer. (May not appear in FOSS version)
  - [ ] (Somebody's) Calendar and Time Transformer. (numbat backend)
  - [ ] (Somebody's) Unit Transformer. (numbat backend)
- - [ ] Patchouli's REPL to use kalk directly.
+ - [x] Yuyuko's BMI calculator. (plain rust function practise)
+ - [ ] Patchouli's REPL to use kalk directly. (aim to port kalker to Flutter UI)
  - And others...
 
 ## Library
