@@ -1,13 +1,12 @@
 import 'package:cmcalc/src/rust/api/kalk_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../model/repl_message.dart';
 
 class KalkReplPage extends StatefulWidget {
-  static const page = "kalk_repl_page";
+  static const page = "/kalk_repl_page";
 
   const KalkReplPage({super.key});
 
@@ -93,8 +92,7 @@ class _KalkReplState extends State<KalkReplPage> {
   List<ReplMessage> messages = [
     ReplMessage.response(
       "Welcome to Kalk Read–eval–print loop terminal. "
-      "It is not completed, rewriting from kalker rust code. "
-      "Press the help button to know more about Kalk.",
+      "It is not completed, rewriting from kalker rust code.",
     ),
   ];
 
@@ -145,86 +143,73 @@ class _KalkReplState extends State<KalkReplPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Patchouli REPL'),
-        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-        actions: [
-          IconButton(
-            onPressed: () => context.go('/help'),
-            icon: const Icon(Icons.help),
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          Flexible(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: Image.asset("assets/patchouli_background.jpg").image,
-                  fit: BoxFit.cover,
-                  opacity: 0.3,
-                ),
+    return Column(
+      children: [
+        Flexible(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: Image.asset("assets/patchouli_background.jpg").image,
+                fit: BoxFit.cover,
+                opacity: 0.3,
               ),
-              child: SafeArea(
-                bottom: false,
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(8.0),
-                  reverse: true,
-                  itemBuilder: (context, idx) => messages[idx].when(
-                    evaluate: (str) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Text(
-                        '>> $str',
-                        style: GoogleFonts.firaCode(
-                          textStyle: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ),
-                    response: (str) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Text(
-                        str,
-                        style: GoogleFonts.firaCode(
-                          textStyle: Theme.of(context).textTheme.titleMedium,
-                          color: Colors.blue[800],
-                        ),
-                      ),
-                    ),
-                    error: (str) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Text(
-                        str,
-                        style: GoogleFonts.firaCode(
-                          textStyle: Theme.of(context).textTheme.titleSmall,
-                          color: Colors.red[800],
-                          fontWeight: FontWeight.bold,
-                        ),
+            ),
+            child: SafeArea(
+              bottom: false,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                reverse: true,
+                itemBuilder: (context, idx) => messages[idx].when(
+                  evaluate: (str) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      '>> $str',
+                      style: GoogleFonts.firaCode(
+                        textStyle: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                   ),
-                  itemCount: messages.length,
+                  response: (str) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      str,
+                      style: GoogleFonts.firaCode(
+                        textStyle: Theme.of(context).textTheme.titleMedium,
+                        color: Colors.blue[800],
+                      ),
+                    ),
+                  ),
+                  error: (str) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      str,
+                      style: GoogleFonts.firaCode(
+                        textStyle: Theme.of(context).textTheme.titleSmall,
+                        color: Colors.red[800],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
+                itemCount: messages.length,
               ),
             ),
           ),
-          const Divider(height: 1.0),
-          Container(
+        ),
+        const Divider(height: 1.0),
+        Container(
+          decoration: BoxDecoration(color: Theme.of(context).cardColor),
+          child: _buildTextComposer(),
+        ),
+        SafeArea(
+          top: false,
+          child: Container(
             decoration: BoxDecoration(color: Theme.of(context).cardColor),
-            child: _buildTextComposer(),
+            constraints: const BoxConstraints(maxHeight: 120),
+            child: _buildSymbolButtonGrid(),
           ),
-          SafeArea(
-            top: false,
-            child: Container(
-              decoration: BoxDecoration(color: Theme.of(context).cardColor),
-              constraints: const BoxConstraints(maxHeight: 120),
-              child: _buildSymbolButtonGrid(),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -308,7 +293,7 @@ class _KalkReplState extends State<KalkReplPage> {
         child: Row(
           children: [
             const SizedBox(width: 4),
-            Text(">>"),
+            Text('>', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 4),
             Flexible(
               child: TextField(
