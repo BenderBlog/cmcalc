@@ -66,57 +66,48 @@ class _BmiCalculatorState extends State<BmiCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: Image.asset("assets/yuyuko_background.jpg").image,
-          fit: BoxFit.cover,
-          opacity: 0.3,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 320),
-              child: TextField(
-                decoration: const InputDecoration(labelText: "Height in cm"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                onChanged: (text) {
-                  state.height = double.tryParse(text);
-                },
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 320),
+            child: TextField(
+              decoration: const InputDecoration(labelText: "Height in cm"),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              onChanged: (text) {
+                state.height = double.tryParse(text);
+              },
             ),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 320),
-              child: TextField(
-                decoration: const InputDecoration(labelText: "Weight in kg"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                onChanged: (text) {
-                  state.weight = double.tryParse(text);
-                },
-              ),
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 320),
+            child: TextField(
+              decoration: const InputDecoration(labelText: "Weight in kg"),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              onChanged: (text) {
+                state.weight = double.tryParse(text);
+              },
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Result: ${state.result?.toStringAsFixed(1) ?? "To Be Calculated."}",
-              style: const TextStyle(fontSize: 18),
-            ),
-            Text(
-              "Status: ${BMIStatus.fromValue(state.result).name}",
-              style: const TextStyle(fontSize: 18),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Result: ${state.result?.toStringAsFixed(1) ?? "To Be Calculated."}",
+            style: const TextStyle(fontSize: 18),
+          ),
+          Text(
+            "Status: ${BMIStatus.fromValue(state.result).name}",
+            style: const TextStyle(fontSize: 18),
+          ),
+        ],
       ),
     );
   }

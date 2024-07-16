@@ -16,8 +16,8 @@ dependencies:
   freezed_annotation: ^2.4.3
   google_fonts: ^6.2.1
   json_annotation: ^4.9.0
-  flutter_grid_button: ^2.1.0
   go_router: ^14.2.1
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

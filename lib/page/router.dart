@@ -1,6 +1,5 @@
 import 'package:cmcalc/page/bmi_calculator/bmi_calculator.dart';
 import 'package:cmcalc/page/home.dart';
-import 'package:cmcalc/page/kalk_repl/kalk_repl_help_page.dart';
 import 'package:cmcalc/page/kalk_repl/kalk_repl_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -30,13 +29,6 @@ final router = GoRouter(
           path: KalkReplPage.page,
           name: "Patchouli REPL",
           builder: (context, state) => const KalkReplPage(),
-          routes: [
-            GoRoute(
-              path: KalkReplHelpPage.page,
-              name: "Patchouli REPL Help Page",
-              builder: (context, state) => const KalkReplHelpPage(),
-            ),
-          ],
         ),
       ],
     ),

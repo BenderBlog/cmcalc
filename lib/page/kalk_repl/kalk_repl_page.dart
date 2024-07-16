@@ -1,8 +1,7 @@
 import 'package:cmcalc/src/rust/api/kalk_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_grid_button/flutter_grid_button.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/repl_message.dart';
 
@@ -35,9 +34,9 @@ class _KalkReplState extends State<KalkReplPage> {
   }
 
   final rightButtonValues = [
-    "trigon",
-    "func",
-    "others",
+    "trig",
+    "f(x)",
+    "cons",
     "←",
     "→",
     "⌫",
@@ -173,6 +172,98 @@ class _KalkReplState extends State<KalkReplPage> {
     });
   }
 
+  void _buttonCallback(String value) {
+    switch (value) {
+      case "←":
+        if (_controller.selection.base.offset >= 1) {
+          _controller.selection = TextSelection.collapsed(
+            offset: _controller.selection.base.offset - 1,
+          );
+        }
+        break;
+      case "→":
+        if (_controller.selection.base.offset != _controller.text.length) {
+          _controller.selection = TextSelection.collapsed(
+            offset: _controller.selection.base.offset + 1,
+          );
+        }
+        break;
+      case '⌫':
+        int position = _controller.selection.base.offset;
+        if (position == 0) break;
+        _controller.text =
+            _controller.text.replaceRange(position - 1, position, "");
+        _controller.selection = TextSelection.collapsed(offset: position - 1);
+        setState(() {
+          _isComposing = _controller.text.isNotEmpty;
+        });
+        break;
+      case 'trig':
+        setState(() {
+          if (buttonState == ButtonState.trigon) {
+            buttonState = ButtonState.normal;
+          } else {
+            buttonState = ButtonState.trigon;
+          }
+        });
+        break;
+      case 'f(x)':
+        setState(() {
+          if (buttonState == ButtonState.func) {
+            buttonState = ButtonState.normal;
+          } else {
+            buttonState = ButtonState.func;
+          }
+        });
+        break;
+      case 'cons':
+        setState(() {
+          if (buttonState == ButtonState.others) {
+            buttonState = ButtonState.normal;
+          } else {
+            buttonState = ButtonState.others;
+          }
+        });
+        break;
+      case 'Help':
+        launchUrl(Uri.parse("https://kalker.xyz/"));
+        break;
+      case "asin":
+      case "sin":
+      case "acos":
+      case "cos":
+      case "atan":
+      case "tan":
+      case "sqrt":
+      case "log":
+      case "exp":
+      case "ln":
+      case '√':
+      case '∑':
+      case '∫':
+      case "Γ":
+        _addChar('$value()', offset: '$value()'.length - 1);
+        break;
+      case "f()":
+        _addChar(value, offset: value.length - 1);
+      case 'abs':
+        _addChar("||", offset: 1);
+        break;
+      case '()':
+        _addChar("()", offset: 1);
+        break;
+      case '⌈⌉':
+        _addChar("⌈⌉", offset: 1);
+        break;
+      case '⌊⌋':
+        _addChar("⌊⌋", offset: 1);
+        break;
+      default:
+        _addChar(value);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -259,165 +350,103 @@ class _KalkReplState extends State<KalkReplPage> {
             ],
           ),
         ),
+        const Divider(height: 1.0),
         SafeArea(
           top: false,
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
             ),
-            constraints: const BoxConstraints(
-              maxHeight: 240,
-              maxWidth: 480,
-            ),
+            padding: const EdgeInsets.all(4),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Flexible(
-                  flex: 2,
-                  child: Builder(builder: (context) {
-                    late List<String> buttons;
-                    switch (buttonState) {
-                      case ButtonState.normal:
-                        buttons = leftButtonDefault;
-                      case ButtonState.trigon:
-                        buttons = leftButtonTrigon;
-                      case ButtonState.func:
-                        buttons = leftButtonFunc;
-                      case ButtonState.others:
-                        buttons = leftButtonOthers;
-                    }
-                    return GridButton(
-                      borderColor: Colors.transparent,
-                      onPressed: (value) {
-                        switch (value) {
-                          case "asin":
-                          case "sin":
-                          case "acos":
-                          case "cos":
-                          case "atan":
-                          case "tan":
-                          case "sqrt":
-                          case "log":
-                          case "exp":
-                          case "ln":
-                          case '√':
-                          case '∑':
-                          case '∫':
-                          case "Γ":
-                            _addChar('$value()', offset: '$value()'.length - 1);
-                            break;
-                          case "f()":
-                            _addChar(value, offset: '$value'.length - 1);
-                          case 'abs':
-                            _addChar("||", offset: 1);
-                            break;
-                          case '()':
-                            _addChar("()", offset: 1);
-                            break;
-                          case '⌈⌉':
-                            _addChar("⌈⌉", offset: 1);
-                            break;
-                          case '⌊⌋':
-                            _addChar("⌊⌋", offset: 1);
-                            break;
-                          default:
-                            _addChar(value);
-                            break;
-                        }
-                      },
-                      items: List<List<GridButtonItem>>.generate(
-                        buttons.length ~/ 2,
-                        (index) => [
-                          GridButtonItem(
-                            title: buttons[index * 2],
+                Builder(builder: (context) {
+                  late List<String> buttons;
+                  switch (buttonState) {
+                    case ButtonState.normal:
+                      buttons = leftButtonDefault;
+                    case ButtonState.trigon:
+                      buttons = leftButtonTrigon;
+                    case ButtonState.func:
+                      buttons = leftButtonFunc;
+                    case ButtonState.others:
+                      buttons = leftButtonOthers;
+                  }
+                  return Column(
+                    children: List.generate(
+                      buttons.length ~/ 2,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Row(
+                          children: [
+                            TextButton(
+                              onPressed: () =>
+                                  _buttonCallback(buttons[index * 2]),
+                              child: Text(buttons[index * 2]),
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  _buttonCallback(buttons[index * 2 + 1]),
+                              child: Text(buttons[index * 2 + 1]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+                Column(
+                  children: List.generate(
+                    rightButtonValues.length ~/ 3,
+                    (index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Row(
+                        children: [
+                          TextButton(
+                            style: index * 3 == 0 &&
+                                    buttonState == ButtonState.trigon
+                                ? FilledButton.styleFrom(
+                                    foregroundColor:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                : null,
+                            onPressed: () =>
+                                _buttonCallback(rightButtonValues[index * 3]),
+                            child: Text(rightButtonValues[index * 3]),
                           ),
-                          GridButtonItem(
-                            title: buttons[index * 2 + 1],
+                          TextButton(
+                            style: index * 3 == 0 &&
+                                    buttonState == ButtonState.func
+                                ? FilledButton.styleFrom(
+                                    foregroundColor:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                : null,
+                            onPressed: () => _buttonCallback(
+                                rightButtonValues[index * 3 + 1]),
+                            child: Text(rightButtonValues[index * 3 + 1]),
+                          ),
+                          TextButton(
+                            style: index * 3 == 0 &&
+                                    buttonState == ButtonState.others
+                                ? FilledButton.styleFrom(
+                                    foregroundColor:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                : null,
+                            onPressed: () => _buttonCallback(
+                                rightButtonValues[index * 3 + 2]),
+                            child: Text(rightButtonValues[index * 3 + 2]),
                           ),
                         ],
                       ),
-                    );
-                  }),
-                ),
-                Flexible(
-                  flex: 4,
-                  child: GridButton(
-                    borderColor: Colors.transparent,
-                    onPressed: (value) {
-                      switch (value) {
-                        case "←":
-                          if (_controller.selection.base.offset >= 1) {
-                            _controller.selection = TextSelection.collapsed(
-                              offset: _controller.selection.base.offset - 1,
-                            );
-                          }
-                          break;
-                        case "→":
-                          if (_controller.selection.base.offset !=
-                              _controller.text.length) {
-                            _controller.selection = TextSelection.collapsed(
-                              offset: _controller.selection.base.offset + 1,
-                            );
-                          }
-                          break;
-                        case '⌫':
-                          int position = _controller.selection.base.offset;
-                          if (position == 0) break;
-                          _controller.text = _controller.text
-                              .replaceRange(position - 1, position, "");
-                          _controller.selection =
-                              TextSelection.collapsed(offset: position - 1);
-                          setState(() {
-                            _isComposing = _controller.text.isNotEmpty;
-                          });
-                          break;
-                        case 'trigon':
-                          setState(() {
-                            if (buttonState == ButtonState.trigon) {
-                              buttonState = ButtonState.normal;
-                            } else {
-                              buttonState = ButtonState.trigon;
-                            }
-                          });
-                          break;
-                        case 'func':
-                          setState(() {
-                            if (buttonState == ButtonState.func) {
-                              buttonState = ButtonState.normal;
-                            } else {
-                              buttonState = ButtonState.func;
-                            }
-                          });
-                          break;
-                        case 'others':
-                          setState(() {
-                            if (buttonState == ButtonState.others) {
-                              buttonState = ButtonState.normal;
-                            } else {
-                              buttonState = ButtonState.others;
-                            }
-                          });
-                          break;
-                        case 'Help':
-                          context.go('help');
-                          break;
-                        default:
-                          _addChar(value);
-                          break;
-                      }
-                    },
-                    items: List<List<GridButtonItem>>.generate(
-                      rightButtonValues.length ~/ 3,
-                      (index) => [
-                        GridButtonItem(
-                          title: rightButtonValues[index * 3],
-                        ),
-                        GridButtonItem(
-                          title: rightButtonValues[index * 3 + 1],
-                        ),
-                        GridButtonItem(
-                          title: rightButtonValues[index * 3 + 2],
-                        ),
-                      ],
                     ),
                   ),
                 ),
@@ -430,6 +459,7 @@ class _KalkReplState extends State<KalkReplPage> {
   }
 }
 
+/*
 class ReplButton extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
@@ -451,3 +481,4 @@ class ReplButton extends StatelessWidget {
     );
   }
 }
+*/
