@@ -5,30 +5,45 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _shellNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shell');
-
+final GlobalKey<NavigatorState> _sectionANavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
 // GoRouter configuration
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: BmiCalculator.page,
+  initialLocation: KalkReplPage.page,
   routes: [
-    ShellRoute(
-      navigatorKey: _shellNavigatorKey,
-      builder: (BuildContext context, GoRouterState state, Widget child) {
+    StatefulShellRoute.indexedStack(
+      builder: (
+        BuildContext context,
+        GoRouterState state,
+        StatefulNavigationShell navigationShell,
+      ) {
         final String? routeName = GoRouterState.of(context).topRoute?.name;
-        return HomePage(title: routeName ?? "Unknown", child: child);
+        return HomePage(
+          title: routeName ?? "Unknown",
+          navigationShell: navigationShell,
+        );
       },
-      routes: <RouteBase>[
-        GoRoute(
-          path: BmiCalculator.page,
-          name: "Yuyuko BMI Calculator",
-          builder: (context, state) => const BmiCalculator(),
+      branches: <StatefulShellBranch>[
+        StatefulShellBranch(
+          //navigatorKey: _sectionANavigatorKey,
+          routes: [
+            GoRoute(
+              path: KalkReplPage.page,
+              name: "Marisa REPL",
+              builder: (context, state) => const KalkReplPage(),
+            ),
+          ],
         ),
-        GoRoute(
-          path: KalkReplPage.page,
-          name: "Marisa REPL",
-          builder: (context, state) => const KalkReplPage(),
+        StatefulShellBranch(
+          //navigatorKey: _sectionANavigatorKey,
+          routes: [
+            GoRoute(
+              path: BmiCalculator.page,
+              name: "Yuyuko BMI Calculator",
+              builder: (context, state) => const BmiCalculator(),
+            ),
+          ],
         ),
       ],
     ),

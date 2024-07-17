@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   final String title;
-  final Widget child;
+  final StatefulNavigationShell navigationShell;
 
   const HomePage({
     super.key,
     required this.title,
-    required this.child,
+    required this.navigationShell,
   });
 
   @override
@@ -41,17 +41,17 @@ class HomePage extends StatelessWidget {
               child: Text('Cirno Math Classroom/Calculator'),
             ),
             ListTile(
-              title: const Text('Yuyuko BMI Calculator'),
-              onTap: () => context.go(BmiCalculator.page),
-            ),
-            ListTile(
               title: const Text('Patchouli REPL'),
               onTap: () => context.go(KalkReplPage.page),
+            ),
+            ListTile(
+              title: const Text('Yuyuko BMI Calculator'),
+              onTap: () => context.go(BmiCalculator.page),
             ),
           ],
         ),
       ),
-      body: child,
+      body: navigationShell,
     );
   }
 }
