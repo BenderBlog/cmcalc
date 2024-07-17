@@ -27,7 +27,7 @@ final router = GoRouter(
         ),
         GoRoute(
           path: KalkReplPage.page,
-          name: "Patchouli REPL",
+          name: "Marisa REPL",
           builder: (context, state) => const KalkReplPage(),
         ),
       ],

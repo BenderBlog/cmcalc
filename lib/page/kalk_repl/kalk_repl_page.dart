@@ -116,8 +116,7 @@ class _KalkReplState extends State<KalkReplPage> {
 
   List<ReplMessage> messages = [
     ReplMessage.response(
-      "Welcome to Kalk Read–eval–print loop terminal. "
-      "It is not completed, rewriting from kalker rust code.",
+      "Welcome to Kalk terminal.",
     ),
   ];
 
@@ -271,42 +270,44 @@ class _KalkReplState extends State<KalkReplPage> {
         Flexible(
           child: SafeArea(
             bottom: false,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (context, idx) => messages[idx].when(
-                evaluate: (str) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Text(
-                    '>> $str',
-                    style: GoogleFonts.firaCode(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
+            child: SelectionArea(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                reverse: true,
+                itemBuilder: (context, idx) => messages[idx].when(
+                  evaluate: (str) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      '>> $str',
+                      style: GoogleFonts.firaCode(
+                        textStyle: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                  ),
+                  response: (str) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      str,
+                      style: GoogleFonts.firaCode(
+                        textStyle: Theme.of(context).textTheme.titleMedium,
+                        color: Colors.blue[800],
+                      ),
+                    ),
+                  ),
+                  error: (str) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      str,
+                      style: GoogleFonts.firaCode(
+                        textStyle: Theme.of(context).textTheme.titleSmall,
+                        color: Colors.red[800],
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                response: (str) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Text(
-                    str,
-                    style: GoogleFonts.firaCode(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      color: Colors.blue[800],
-                    ),
-                  ),
-                ),
-                error: (str) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Text(
-                    str,
-                    style: GoogleFonts.firaCode(
-                      textStyle: Theme.of(context).textTheme.titleSmall,
-                      color: Colors.red[800],
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                itemCount: messages.length,
               ),
-              itemCount: messages.length,
             ),
           ),
         ),
