@@ -391,8 +391,7 @@ dependencies = [
 [[package]]
 name = "kalk"
 version = "3.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "630f0c10329967e889e0853f04a9cd51bd2f8e8a8e0dc9c8680e0575eeab6681"
+source = "git+https://github.com/BenderBlog/kalker/?branch=tanh_sinh#d65ae1ae225d14e1bf176efc27c5a8b42456ad49"
 dependencies = [
  "lazy_static",
  "rug",

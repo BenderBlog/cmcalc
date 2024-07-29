@@ -12,5 +12,7 @@ gmp-mpfr-sys = { version = "1.6", features = ["force-cross"] }
 once_cell = "1.19.0"
 
 [dependencies.kalk]
-version = "3.2.0"
+git = "https://github.com/BenderBlog/kalker/"
+branch = "tanh_sinh"
+#version = "3.2.0"
 #default-features = false
