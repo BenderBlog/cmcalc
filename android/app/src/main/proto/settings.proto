@@ -1,0 +1,26 @@
+// Copyright 2025 BenderBlog Rodriguez
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+syntax = "proto3";
+
+option java_package = "io.github.benderblog.cmcalc";
+
+// https://qalculate.github.io/reference/includes_8h.html#a690822f0e1b41ef7f46b085ce973e9aa
+enum ApproximationMode {
+  APPROXIMATION_TRY_EXACT = 0;
+  APPROXIMATION_EXACT = 1;
+  APPROXIMATION_APPROXIMATE = 2;
+  APPROXIMATION_EXACT_VARIABLES = 3;
+}
+
+// https://qalculate.github.io/reference/includes_8h.html#ac1f1e0a72eb3bb133c13c1aedc837223
+enum ParsingMode {
+  PARSING_MODE_ADAPTIVE = 0;
+  PARSING_MODE_IMPLICIT_MULTIPLICATION_FIRST = 1;
+  PARSING_MODE_CONVENTIONAL = 2;
+}
+
+message Settings {
+  ApproximationMode approximation = 1;
+  ParsingMode parsing = 2;
+}
