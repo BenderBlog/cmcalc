@@ -4,6 +4,11 @@
 
 CMCalc 旗舰版: Qalculate! 移动版本
 
+<p align="center">
+<img alt="iOS screenshot" src="screenshots/ios.png" width=270>
+<img alt="Android screenshot" src="screenshots/android.jpg" width=270>
+</p>
+
 本项目是一系列计算器软件的开端，我将其称作 CMCalc。项目目标是将主要的开源计算器代数系统在手机上呈现出来，目前仍在开发，本人尽力将这些库的全部功能提供给用户。
 
 项目预计成果：

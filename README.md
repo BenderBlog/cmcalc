@@ -4,6 +4,11 @@
 
 CMCalc flagship version: Qalculate! frontend in Android and iOS
 
+<p align="center">
+<img alt="iOS screenshot" src="screenshots/ios.png" width=270>
+<img alt="Android screenshot" src="screenshots/android.jpg" width=270>
+</p>
+
 This program is the beginning a series of calculator software called CMCalc, a attempt to bring 
 FOSS Computer Algebra System to the mobile platform (iOS and Android). It is now working in 
 progress, and I am doing my best to cover all the functionality available to the end users.
