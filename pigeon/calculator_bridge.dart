@@ -8,12 +8,13 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/calculator_bridge/calculator_bridge.g.dart',
   dartOptions: DartOptions(),
-  swiftOut: 'ios/Runner/calculator_bridge.g.swift',
-  swiftOptions: SwiftOptions(),
-  kotlinOut: 'android/app/src/main/kotlin/io/github/benderblog/cmcalc/CalculatorBridge.g.kt',
+  objcHeaderOut: 'ios/Runner/CalculatorBridge.g.h',
+  objcSourceOut: 'ios/Runner/CalculatorBridge.g.mm',
+  objcOptions: ObjcOptions(),
+  kotlinOut:
+      'android/app/src/main/kotlin/io/github/benderblog/cmcalc/CalculatorBridge.g.kt',
   kotlinOptions: KotlinOptions(),
 ))
-
 enum ResultType {
   success,
   warning,
@@ -32,7 +33,6 @@ class CalcResult {
   String parsed;
   String result;
 }
-
 
 @HostApi()
 abstract class CalculatorWrapper {
