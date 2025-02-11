@@ -11,6 +11,7 @@
 @implementation CalculatorBridge
 - (instancetype)init {
     if(self = [super init]) {
+        setlocale(LC_ALL, "zh_CN");
         new Calculator();
     }
     return self;

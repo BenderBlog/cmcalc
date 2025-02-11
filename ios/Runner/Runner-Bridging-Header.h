@@ -1,3 +1,5 @@
 #import "GeneratedPluginRegistrant.h"
 #import "CalculatorBridge.g.h"
 #import "CalculatorBridge.h"
+#import "CalendarBridge.h"
+#import "CalendarBridge.g.h"
