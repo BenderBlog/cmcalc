@@ -36,6 +36,28 @@ class _CalendarConverterState extends State<CalendarConverter> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        TextButton.icon(
+          onPressed: () async {
+            input = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(-2583),
+                  lastDate: DateTime(2300),
+                ) ??
+                input;
+            if (context.mounted) {
+              setState(() {
+                state = _api.setCalendar(
+                  null,
+                  input.year,
+                  input.month,
+                  input.day,
+                  CalendarSystemFromDart.gregorian,
+                );
+              });
+            }
+          },
+          label: Text("Select date"),
+        ),
         FutureBuilder(
           future: state,
           builder: (context, snapshot) {

@@ -46,8 +46,9 @@ class BmiCalculatorState extends ChangeNotifier {
   Future<void> bmiCalc() async {
     if (_weight == null || _height == null) return;
     var calc = CalculatorWrapper();
-    print("$_weight/($_height*0.01)^2");
-    result = double.tryParse(await calc.calculate("$_weight/$_height^2").then((value) => value.result));
+    result = double.tryParse(await calc
+        .calculate("$_weight/(($_height*0.01)^2)")
+        .then((value) => value.result));
     notifyListeners();
   }
 }

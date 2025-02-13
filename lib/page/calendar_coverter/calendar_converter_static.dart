@@ -126,7 +126,7 @@ List<String> chineseAnimals = [
 ];
 
 List<String> chineseMonths = [
-  "一月",
+  "正月",
   "二月",
   "三月",
   "四月",
@@ -137,7 +137,7 @@ List<String> chineseMonths = [
   "九月",
   "十月",
   "十一月",
-  "十二月",
+  "腊月",
   "一月（闰月）",
   "二月（闰月）",
   "三月（闰月）",
