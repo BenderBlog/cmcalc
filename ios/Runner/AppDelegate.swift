@@ -10,9 +10,9 @@ import UIKit
         GeneratedPluginRegistrant.register(with: self)
         
         let controller = window?.rootViewController as! FlutterViewController
-        let api = CalculatorBridge()
-        SetUpCalculatorWrapper(controller.binaryMessenger, api)
-        
+        SetUpCalculatorWrapper(controller.binaryMessenger, CalculatorBridge())
+        SetUpCalendarWrapper(controller.binaryMessenger, CalendarBridge())
+
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 }

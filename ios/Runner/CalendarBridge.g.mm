@@ -16,7 +16,8 @@
 static NSArray<id> *wrapResult(id result, FlutterError *error) {
   if (error) {
     return @[
-      error.code ?: [NSNull null], error.message ?: [NSNull null], error.details ?: [NSNull null]
+      error.code ?: [NSNull null], error.message ?: [NSNull null],
+      error.details ?: [NSNull null]
     ];
   }
   return @[ result ?: [NSNull null] ];
@@ -35,8 +36,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   }
   return self;
 }
-- (nonnull id)copyWithZone:(nullable NSZone *)zone { 
-    return self;
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+  return self;
 }
 
 @end
@@ -48,10 +49,11 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 @end
 
 @implementation CalendarExecuteState
-+ (instancetype)makeWithIsSuccess:(BOOL )isSuccess
-    message:(nullable NSString *)message
-    data:(NSDictionary<CalendarSystemFromDartBox *, NSArray<NSString *> *> *)data {
-  CalendarExecuteState* pigeonResult = [[CalendarExecuteState alloc] init];
++ (instancetype)makeWithIsSuccess:(BOOL)isSuccess
+                          message:(nullable NSString *)message
+                             data:(NSDictionary<CalendarSystemFromDartBox *,
+                                                NSArray<id> *> *)data {
+  CalendarExecuteState *pigeonResult = [[CalendarExecuteState alloc] init];
   pigeonResult.isSuccess = isSuccess;
   pigeonResult.message = message;
   pigeonResult.data = data;
@@ -81,32 +83,55 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 @implementation nullCalendarBridgePigeonCodecReader
 - (nullable id)readValueOfType:(UInt8)type {
   switch (type) {
-    case 129: {
-      NSNumber *enumAsNumber = [self readValue];
-        // Edited by BenderBlog Rodriguez!
-          if (enumAsNumber == nil) {
-              return nil;
-          } else {
-              switch([enumAsNumber integerValue]) {
-                  case 0: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartGregorian];
-                  case 1: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartMilankovic];
-                  case 2: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartJulian];
-                  case 3: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartIslamic];
-                  case 4: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartHebrew];
-                  case 5: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartEgyptian];
-                  case 6: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartPersian];
-                  case 7: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartCoptic];
-                  case 8: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartEthiopian];
-                  case 9: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartIndian];
-                  case 10: return [[CalendarSystemFromDartBox alloc] initWithValue:CalendarSystemFromDartChinese];
-                  default: return nil;
-              }
-          }
+  case 129: {
+    NSNumber *enumAsNumber = [self readValue];
+    // Edited by BenderBlog Rodriguez!
+    if (enumAsNumber == nil) {
+      return nil;
+    } else {
+      switch ([enumAsNumber integerValue]) {
+      case 0:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartGregorian];
+      case 1:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartMilankovic];
+      case 2:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartJulian];
+      case 3:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartIslamic];
+      case 4:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartHebrew];
+      case 5:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartEgyptian];
+      case 6:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartPersian];
+      case 7:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartCoptic];
+      case 8:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartEthiopian];
+      case 9:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartIndian];
+      case 10:
+        return [[CalendarSystemFromDartBox alloc]
+            initWithValue:CalendarSystemFromDartChinese];
+      default:
+        return nil;
+      }
     }
-    case 130: 
-      return [CalendarExecuteState fromList:[self readValue]];
-    default:
-      return [super readValueOfType:type];
+  }
+  case 130:
+    return [CalendarExecuteState fromList:[self readValue]];
+  default:
+    return [super readValueOfType:type];
   }
 }
 @end
@@ -118,7 +143,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   if ([value isKindOfClass:[CalendarSystemFromDartBox class]]) {
     CalendarSystemFromDartBox *box = (CalendarSystemFromDartBox *)value;
     [self writeByte:129];
-    [self writeValue:(value == nil ? [NSNull null] : [NSNumber numberWithInteger:box.value])];
+    [self writeValue:(value == nil ? [NSNull null]
+                                   : [NSNumber numberWithInteger:box.value])];
   } else if ([value isKindOfClass:[CalendarExecuteState class]]) {
     [self writeByte:130];
     [self writeValue:[value toList]];
@@ -128,7 +154,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 }
 @end
 
-@interface nullCalendarBridgePigeonCodecReaderWriter : FlutterStandardReaderWriter
+@interface nullCalendarBridgePigeonCodecReaderWriter
+    : FlutterStandardReaderWriter
 @end
 @implementation nullCalendarBridgePigeonCodecReaderWriter
 - (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
@@ -143,36 +170,62 @@ NSObject<FlutterMessageCodec> *nullGetCalendarBridgeCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
   static dispatch_once_t sPred = 0;
   dispatch_once(&sPred, ^{
-    nullCalendarBridgePigeonCodecReaderWriter *readerWriter = [[nullCalendarBridgePigeonCodecReaderWriter alloc] init];
-    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
+    nullCalendarBridgePigeonCodecReaderWriter *readerWriter =
+        [[nullCalendarBridgePigeonCodecReaderWriter alloc] init];
+    sSharedObject =
+        [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
   });
   return sSharedObject;
 }
-void SetUpCalendarWrapper(id<FlutterBinaryMessenger> binaryMessenger, NSObject<CalendarWrapper> *api) {
+void SetUpCalendarWrapper(id<FlutterBinaryMessenger> binaryMessenger,
+                          NSObject<CalendarWrapper> *api) {
   SetUpCalendarWrapperWithSuffix(binaryMessenger, api, @"");
 }
 
-void SetUpCalendarWrapperWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSObject<CalendarWrapper> *api, NSString *messageChannelSuffix) {
-  messageChannelSuffix = messageChannelSuffix.length > 0 ? [NSString stringWithFormat: @".%@", messageChannelSuffix] : @"";
+void SetUpCalendarWrapperWithSuffix(id<FlutterBinaryMessenger> binaryMessenger,
+                                    NSObject<CalendarWrapper> *api,
+                                    NSString *messageChannelSuffix) {
+  messageChannelSuffix =
+      messageChannelSuffix.length > 0
+          ? [NSString stringWithFormat:@".%@", messageChannelSuffix]
+          : @"";
   {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.cmcalc.CalendarWrapper.setCalendar", messageChannelSuffix]
+    FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
+           initWithName:[NSString
+                            stringWithFormat:@"%@%@",
+                                             @"dev.flutter.pigeon.cmcalc."
+                                             @"CalendarWrapper.setCalendar",
+                                             messageChannelSuffix]
         binaryMessenger:binaryMessenger
-        codec:nullGetCalendarBridgeCodec()];
+                  codec:nullGetCalendarBridgeCodec()];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(setCalendarYearStem:year:month:day:calendarSystem:completion:)], @"CalendarWrapper api (%@) doesn't respond to @selector(setCalendarYearStem:year:month:day:calendarSystem:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+      NSCAssert(
+          [api respondsToSelector:@selector
+               (setCalendarYearStem:year:month:day:calendarSystem:completion:)],
+          @"CalendarWrapper api (%@) doesn't respond to "
+          @"@selector(setCalendarYearStem:year:month:day:calendarSystem:"
+          @"completion:)",
+          api);
+      [channel setMessageHandler:^(id _Nullable message,
+                                   FlutterReply callback) {
         NSArray<id> *args = message;
         NSNumber *arg_yearStem = GetNullableObjectAtIndex(args, 0);
         NSInteger arg_year = [GetNullableObjectAtIndex(args, 1) integerValue];
         NSInteger arg_month = [GetNullableObjectAtIndex(args, 2) integerValue];
         NSInteger arg_day = [GetNullableObjectAtIndex(args, 3) integerValue];
-        CalendarSystemFromDartBox *boxedCalendarSystemFromDart = GetNullableObjectAtIndex(args, 4);
-        CalendarSystemFromDart arg_calendarSystem = boxedCalendarSystemFromDart.value;
-        [api setCalendarYearStem:arg_yearStem year:arg_year month:arg_month day:arg_day calendarSystem:arg_calendarSystem completion:^(CalendarExecuteState *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
+        CalendarSystemFromDartBox *boxedCalendarSystemFromDart =
+            GetNullableObjectAtIndex(args, 4);
+        CalendarSystemFromDart arg_calendarSystem =
+            boxedCalendarSystemFromDart.value;
+        [api setCalendarYearStem:arg_yearStem
+                            year:arg_year
+                           month:arg_month
+                             day:arg_day
+                  calendarSystem:arg_calendarSystem
+                      completion:^(CalendarExecuteState *_Nullable output,
+                                   FlutterError *_Nullable error) {
+                        callback(wrapResult(output, error));
+                      }];
       }];
     } else {
       [channel setMessageHandler:nil];

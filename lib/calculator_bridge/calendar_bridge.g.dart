@@ -40,7 +40,7 @@ class CalendarExecuteState {
 
   String? message;
 
-  Map<CalendarSystemFromDart, List<String>> data;
+  Map<CalendarSystemFromDart, List> data;
 
   Object encode() {
     return <Object?>[
@@ -55,7 +55,7 @@ class CalendarExecuteState {
     return CalendarExecuteState(
       isSuccess: result[0]! as bool,
       message: result[1] as String?,
-      data: (result[2] as Map<Object?, Object?>?)!.cast<CalendarSystemFromDart, List<String>>(),
+      data: (result[2] as Map<Object?, Object?>?)!.cast<CalendarSystemFromDart, List>(),
     );
   }
 }

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: LGPL-2.1-or-later
 
 import 'package:cmcalc/page/bmi_calculator/bmi_calculator.dart';
+import 'package:cmcalc/page/calendar_coverter/calendar_converter.dart';
 import 'package:cmcalc/page/repl/repl_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -44,12 +45,16 @@ class HomePage extends StatelessWidget {
               child: Text('Cirno Math Classroom/Calculator'),
             ),
             ListTile(
-              title: const Text('Patchouli REPL'),
+              title: const Text('Qalculate REPL'),
               onTap: () => context.go(ReplPage.page),
             ),
             ListTile(
-              title: const Text('Yuyuko BMI Calculator'),
+              title: const Text('BMI Calculator'),
               onTap: () => context.go(BmiCalculator.page),
+            ),
+            ListTile(
+              title: const Text('Calendar Converter'),
+              onTap: () => context.go(CalendarConverter.page),
             ),
           ],
         ),

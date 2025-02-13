@@ -37,10 +37,10 @@ typedef NS_ENUM(NSUInteger, CalendarSystemFromDart) {
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithIsSuccess:(BOOL )isSuccess
     message:(nullable NSString *)message
-    data:(NSDictionary<CalendarSystemFromDartBox *, NSArray<NSString *> *> *)data;
+    data:(NSDictionary<CalendarSystemFromDartBox *, NSArray<id> *> *)data;
 @property(nonatomic, assign) BOOL  isSuccess;
 @property(nonatomic, copy, nullable) NSString * message;
-@property(nonatomic, copy) NSDictionary<CalendarSystemFromDartBox *, NSArray<NSString *> *> * data;
+@property(nonatomic, copy) NSDictionary<CalendarSystemFromDartBox *, NSArray<id> *> * data;
 @end
 
 /// The codec used by all APIs.

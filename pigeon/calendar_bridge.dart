@@ -30,7 +30,7 @@ enum CalendarSystemFromDart {
 class CalendarExecuteState {
   bool isSuccess;
   String? message;
-  Map<CalendarSystemFromDart, List<String>> data;
+  Map<CalendarSystemFromDart, List> data;
 
   CalendarExecuteState({
     required this.isSuccess,

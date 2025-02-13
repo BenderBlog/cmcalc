@@ -69,14 +69,14 @@ enum class CalendarSystemFromDart(val raw: Int) {
 data class CalendarExecuteState (
   val isSuccess: Boolean,
   val message: String? = null,
-  val data: Map<CalendarSystemFromDart, List<String>>
+  val data: Map<CalendarSystemFromDart, List<Any?>>
 )
  {
   companion object {
     fun fromList(pigeonVar_list: List<Any?>): CalendarExecuteState {
       val isSuccess = pigeonVar_list[0] as Boolean
       val message = pigeonVar_list[1] as String?
-      val data = pigeonVar_list[2] as Map<CalendarSystemFromDart, List<String>>
+      val data = pigeonVar_list[2] as Map<CalendarSystemFromDart, List<Any?>>
       return CalendarExecuteState(isSuccess, message, data)
     }
   }
