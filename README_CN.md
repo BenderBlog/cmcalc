@@ -22,6 +22,21 @@ CMCalc 旗舰版: Qalculate! 移动版本
 Hopes an adorable and cute girl with [pretty blue eyes](https://www.youtube.com/watch?v=r1of21efNtk)
 helps me, where is she...
 
+## 计划特性
+
+高优先级：
+ - [ ] 交互界面
+ - [ ] 日历转换
+ - [ ] BMI 计算
+ - [ ] 符号计算窗口
+ - [ ] 九章算术教学
+
+低优先级：
+ - [ ] 历史记录，涉及大量原生代码
+ - [ ] 变量函数存储，涉及大量原生代码
+ - [ ] 汇率转换，涉及 libcurl
+ - [ ] 绘图，涉及 gnuplot
+
 ## 授权
 
 GPLv2 或任何以后版本（因为 qalculate 限制）
