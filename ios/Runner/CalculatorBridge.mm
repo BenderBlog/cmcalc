@@ -13,6 +13,7 @@
     if(self = [super init]) {
         setlocale(LC_ALL, "zh_CN");
         new Calculator();
+        CALCULATOR->loadGlobalDefinitions();
     }
     return self;
 }
