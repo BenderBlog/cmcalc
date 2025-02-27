@@ -5,17 +5,13 @@ package io.github.benderblog.cmcalc
 
 import CalculatorWrapper
 import android.system.Os.setenv
-import android.content.Context
 import android.system.Os.getenv
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import com.jherkenhoff.libqalculate.Calculator
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+//val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity: FlutterActivity() {
     init {
@@ -28,5 +24,6 @@ class MainActivity: FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         val api = CalculatorBridge(Calculator())
         CalculatorWrapper.setUp(flutterEngine.dartExecutor.binaryMessenger, api)
+        CalendarWrapper.setUp(flutterEngine.dartExecutor.binaryMessenger, CalendarBridge())
     }
 }

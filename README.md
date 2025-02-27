@@ -24,6 +24,22 @@ Planning product:
 Hopes an adorable and cute girl with [pretty blue eyes](https://www.youtube.com/watch?v=r1of21efNtk) 
 helps me, where is she...
 
+## Planning Feature
+
+TIER 1 Functions:
+
+ - [ ] An REPL to use libqalculate's function directly with user-friendly input.
+ - [ ] Calendar conversion.
+ - [x] BMI Calculation.
+ - [ ] Symbolic input window for limit, integration and differentiation.
+ - [ ] The Nine Chapter.
+
+TIER 2 Function:
+ - [ ] History storage, lots of work on native code.
+ - [ ] Variables and functions storage, lots of work on native code.
+ - [ ] Currency conversion, related to libcurl.
+ - [ ] Plotting, related to gnuplot.
+
 ## License
 
 GPLv2 or later, since libqalculate is licensed under it.
